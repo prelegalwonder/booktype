@@ -1,0 +1,48 @@
+# Apache configuration for Booktype server V1.0.1
+
+<VirtualHost *:80>
+
+     # CHANGE THIS
+     ServerName __INSERT_SERVER_NAME__
+     SetEnv HTTP_HOST "__INSERT_SERVER_NAME__"
+
+     SetEnv LC_TIME "en_GB.UTF-8"
+     SetEnv LANG "en_GB.UTF-8"
+
+     WSGIScriptAlias / /home/areplogle/dev/Booktype/mybooktype/booki.wsgi
+
+     <Location "/">
+       Allow from all
+       Options FollowSymLinks
+     </Location>
+
+     Alias /static/ "/home/areplogle/dev/Booktype/mybooktype/static/"
+     <Directory "/home/areplogle/dev/Booktype/mybooktype/static/">
+       Order allow,deny
+       Options Indexes
+       Allow from all
+       IndexOptions FancyIndexing
+     </Directory>
+
+     Alias /site_static/ "/home/areplogle/dev/Booktype/lib/booki/site_static/"
+     <Directory "/home/areplogle/dev/Booktype/lib/booki/site_static/">
+       Order allow,deny
+       Options Indexes
+       Options FollowSymLinks
+       Allow from all
+       IndexOptions FancyIndexing
+     </Directory>
+
+     Alias /media/ "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/media/"
+     <Directory "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/media">
+       Order allow,deny
+       Options Indexes
+       Options FollowSymLinks
+       Allow from all
+       IndexOptions FancyIndexing
+     </Directory>
+
+     ErrorLog /var/log/apache2/booktype-error.log
+     LogLevel warn
+     CustomLog /var/log/apache2/booktype-access.log combined
+</VirtualHost>

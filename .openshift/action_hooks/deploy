@@ -1,0 +1,14 @@
+#!/bin/bash
+# This deploy hook gets executed after dependencies are resolved and the
+# build hook has been run but before the application has been started back
+# up again.  This script gets executed directly, so it could be python, php,
+# ruby, etc.
+
+# Activate VirtualEnv in order to use the correct libraries
+source $OPENSHIFT_APP_DIR/virtenv/bin/activate
+
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py syncdb --noinput'"
+python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py syncdb --noinput
+
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py migrate' "
+python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py migrate 
