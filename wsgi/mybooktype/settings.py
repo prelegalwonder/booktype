@@ -54,7 +54,7 @@ STATIC_ROOT = '%s/libs/booki/static' % BOOKI_ROOT
 STATIC_URL  = '%s/static' % BOOKI_URL
 
 # data
-DATA_ROOT = '%s/wsgi/mybooktype/data' % BOOKI_ROOT
+DATA_ROOT = os.environ['OPENSHIFT_DATA_DIR']
 DATA_URL  = '%s/data' % BOOKI_URL
 
 # profile images
@@ -85,18 +85,16 @@ DEFAULT_PUBLISHER = "Unknown"
 # DATABASE STUFF
 DATABASE_ENGINE = 'django.db.backends.postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 DATABASE_NAME = 'booktype'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'admin'             # Not used with sqlite3.
-#DATABASE_USER = 'booktype'             # Not used with sqlite3.
-#DATABASE_PASSWORD = 'booktype'         # Not used with sqlite3.
-DATABASE_PASSWORD = '<your-password>'         # Not used with sqlite3.
-DATABASE_HOST = '<your-pg-ip>'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
+DATABASE_USER = os.environ['OPENSHIFT_DB_USERNAME']             # Not used with sqlite3.
+DATABASE_PASSWORD = os.environ['OPENSHIFT_DB_PASSWORD']         # Not used with sqlite3.
+DATABASE_HOST = os.environ['OPENSHIFT_DB_HOST']             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = os.environ['OPENSHIFT_DB_PORT']             # Set to empty string for default. Not used with sqlite3.
 
 # REDIS STUFF
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
-REDIS_PASSWORD = None
+REDIS_PASSWORD = 'somepass'
 
 # DJANGO STUFF
 
@@ -189,7 +187,7 @@ def init_logging():
 
     logger = logging.getLogger("booki")
     logger.setLevel(logging.DEBUG)
-    ch = logging.handlers.RotatingFileHandler('%s/../logs/booki.log' % BOOKI_ROOT, maxBytes=100000, backupCount=5)
+    ch = logging.handlers.RotatingFileHandler(os.environ['OPENSHIFT_LOG_DIR'], maxBytes=100000, backupCount=5)
     ch.setLevel(logging.DEBUG)
     ch.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
     logger.addHandler(ch)
