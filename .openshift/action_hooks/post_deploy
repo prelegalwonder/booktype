@@ -13,3 +13,7 @@ source $OPENSHIFT_APP_DIR/virtenv/bin/activate
 echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py loaddata documentation_licenses'"
 python $OPENSHIFT_REPO_DIR/wsgi/mybooktype/manage.py loaddata documentation_licenses
 
+echo "Creating Data Dirs if they don't exist: mkdir -p $OPENSHIFT_DATA_DIR/books $OPENSHIFT_DATA_DIR/profile_images $OPENSHIFT_DATA_DIR/cover_images"
+mkdir -p $OPENSHIFT_DATA_DIR/books
+mkdir -p $OPENSHIFT_DATA_DIR/cover_images
+mkdir -p $OPENSHIFT_DATA_DIR/profile_images
