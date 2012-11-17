@@ -85,10 +85,10 @@ DEFAULT_PUBLISHER = "Unknown"
 # DATABASE STUFF
 DATABASE_ENGINE = 'django.db.backends.postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 DATABASE_NAME = 'booktype'             # Or path to database file if using sqlite3.
-DATABASE_USER = os.environ['OPENSHIFT_DB_USERNAME']             # Not used with sqlite3.
-DATABASE_PASSWORD = os.environ['OPENSHIFT_DB_PASSWORD']         # Not used with sqlite3.
-DATABASE_HOST = os.environ['OPENSHIFT_DB_HOST']             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = os.environ['OPENSHIFT_DB_PORT']             # Set to empty string for default. Not used with sqlite3.
+DATABASE_USER = os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME']             # Not used with sqlite3.
+DATABASE_PASSWORD = os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD']         # Not used with sqlite3.
+DATABASE_HOST = os.environ['OPENSHIFT_POSTGRESQL_DB_HOST']             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = os.environ['OPENSHIFT_POSTGRESQL_DB_PORT']             # Set to empty string for default. Not used with sqlite3.
 
 # REDIS STUFF
 REDIS_HOST = 'localhost'
@@ -187,7 +187,7 @@ def init_logging():
 
     logger = logging.getLogger("booki")
     logger.setLevel(logging.DEBUG)
-    ch = logging.handlers.RotatingFileHandler(os.environ['OPENSHIFT_LOG_DIR'], maxBytes=100000, backupCount=5)
+    ch = logging.handlers.RotatingFileHandler(os.environ['OPENSHIFT_PYTHON_LOG_DIR'] + '/booki.log', maxBytes=100000, backupCount=5)
     ch.setLevel(logging.DEBUG)
     ch.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
     logger.addHandler(ch)
